@@ -1552,7 +1552,7 @@ class {camel}(Protocol):
                         .chain(names.iter().map(|name| format!("{name} = peer.{name}")))
                         .collect::<Vec<_>>()
                         .join("\n");
-
+                    
                     Some(match code {
                         Code::Shared(_) => Code::Shared(aliases),
                         Code::Separate { import, export } => Code::Separate {
@@ -1905,7 +1905,7 @@ from ..types import Result, Ok, Err, Some
                             &alias_module
                         }
                     )?;
-                    writeln!(&mut protocols, "{camel} = {alias_module}.{camel}")?;
+                    writeln!(&mut protocols, "{camel} = {alias_module}.{camel}\n")?;
                 } else {
                     let methods = if code.functions.is_empty() {
                         "    pass".to_owned()
@@ -1951,7 +1951,7 @@ from ..types import Result, Ok, Err, Some
                 .escape();
 
             let protocol = if let Some(alias_module) = world_exports.alias_module {
-                format!("{camel} = {alias_module}.{camel}")
+                format!("{camel} = {alias_module}.{camel}\n")
             } else {
                 let methods = if world_exports.functions.is_empty() {
                     "    pass".to_owned()
@@ -2237,9 +2237,9 @@ fn matches_resource(function: &MyFunction, resource: TypeId, direction: Directio
 
 fn world_module_import(name: &str, alias: &str) -> String {
     if let Some((front, rear)) = name.rsplit_once('.') {
-        format!("from {front} import {rear} as {alias}")
+        format!("from {front} import {rear} as {alias}\n")
     } else {
-        format!("import {name} as {alias}")
+        format!("import {name} as {alias}\n")
     }
 }
 
