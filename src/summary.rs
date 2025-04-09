@@ -1549,7 +1549,7 @@ class {camel}(Protocol):
 
                 let aliases = if let (Some(code), false) = (code.as_ref(), names.is_empty()) {
                     let aliases = iter::once(world_module_import(world_module, "peer"))
-                        .chain(names.iter().map(|name| format!("{name} = peer.{name}")))
+                        .chain(names.iter().map(|name| format!("{name} = peer.{name}\n")))
                         .collect::<Vec<_>>()
                         .join("\n");
                     
